@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Todo List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #eef1f5;
+            margin: 0;
+            padding: 40px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            width: 500px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        a.add-task {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            background-color: #4CAF50;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        a.add-task:hover {
+            background-color: #45a049;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .status {
+            font-weight: bold;
+            color: #777;
+        }
+
+        .actions a {
+            margin-left: 10px;
+            text-decoration: none;
+            color: #007bff;
+            transition: color 0.2s;
+        }
+
+        .actions a:hover {
+            color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Todo List</h1>
+        <a href="{% url 'create_todo' %}" class="add-task">+ Add a new task</a>
+        <ul>
+            {% for todo in todos %}
+                <li>
+                    <div class="task-info">
+                        {{ todo.task }} - 
+                        <span class="status">
+                            {% if todo.completed %}✅ Completed{% else %}❌ Not completed{% endif %}
+                        </span>
+                    </div>
+                    <div class="actions">
+                        <a href="{% url 'update_todo' todo.id %}">Edit</a>
+                        <a href="{% url 'delete_todo' todo.id %}">Delete</a>
+                    </div>
+                </li>
+            {% empty %}
+                <li>No todos yet. <a href="{% url 'create_todo' %}">Add one now</a>.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>
